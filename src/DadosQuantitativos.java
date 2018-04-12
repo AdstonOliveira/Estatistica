@@ -1,4 +1,3 @@
-
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 /**
@@ -7,10 +6,12 @@ import java.util.ArrayList;
 public final class DadosQuantitativos {
    DecimalFormat df = new DecimalFormat("#.##");
    
-   public DadosQuantitativos( ArrayList<Double> amostra ) {
+   public DadosQuantitativos( ArrayList<Double> amostra, int intervalo ) {
       this.amostraOriginal = amostra;
       this.maior = getMaior(amostra,0);
       this.menor = getMenor(amostra,0);
+         
+      this.getByInterval( amostra, intervalo );
    }
    
    private final ArrayList<Double> amostraOriginal;
@@ -21,15 +22,43 @@ public final class DadosQuantitativos {
    private ArrayList<Double> percentIntervalos;
    private ArrayList<Double> proporcaoIntervalos;
    
-   public ArrayList<String> getIntervalos() {
-      return intervalos;
+   public boolean isEmpty(){
+      return amostraOriginal == null;
    }
-   public ArrayList<Integer> getQtdeIntervalos() {
-      return qtdeIntervalos;
+
+   public ArrayList<Double> getPercentIntervalos() {
+      return percentIntervalos;
+   }
+
+   public ArrayList<Double> getProporcaoIntervalos() {
+      return proporcaoIntervalos;
    }
    
+   public void getByPorcion(int porcao){
+      
+      
+      
+      
+   }
+   
+   
+   
+   
+   public ArrayList<String> getIntervalos() {
+      if( !this.isEmpty() )
+         return intervalos;
+      
+      return null;
+   }
+   
+   public ArrayList<Integer> getQtdeIntervalos() {
+      if( !this.isEmpty() )
+         return qtdeIntervalos;
+      return null;
+   }
    
    public String toStringByInterval(){
+      if( !this.isEmpty() ){
       String retorno = "";
       
          for( String each : this.intervalos ){
@@ -38,10 +67,12 @@ public final class DadosQuantitativos {
             i++;
          }
       return retorno;
+      }
       
+    return null;
    }
    
-   public Double getMaior(ArrayList<Double> amostra, int valor){
+   public Double getMaior( ArrayList<Double> amostra, int valor ){
    if( !amostra.isEmpty() ){
       if( valor < amostra.size() ){
          
@@ -54,7 +85,7 @@ public final class DadosQuantitativos {
       return .0;
    }
 
-   public Double getMenor(ArrayList<Double> amostra, int valor){
+   public Double getMenor( ArrayList<Double> amostra, int valor ){
    if( !amostra.isEmpty() ){
       if( valor < amostra.size() ){
          
@@ -68,7 +99,9 @@ public final class DadosQuantitativos {
    }
 
    public void getByInterval( ArrayList<Double> amostra, int qntdIntervalos ){
-   Double range = ( maior - menor ) / qntdIntervalos;
+   if( !this.isEmpty() ){      
+
+      Double range = ( maior - menor ) / qntdIntervalos;
    
       this.qtdeIntervalos = new ArrayList<>();
       this.intervalos = new ArrayList<>();
@@ -91,9 +124,12 @@ public final class DadosQuantitativos {
          }
       }
       this.createPercent();
+      this.createProporcao();
+   }
    }
 
-   public int contador(Double inicio, Double fim){
+   public int contador( Double inicio, Double fim ){
+   if( !this.isEmpty() ){ 
       int conta = 0;
       
          for( int i = 0; i < amostraOriginal.size(); i++ ){
@@ -102,46 +138,31 @@ public final class DadosQuantitativos {
                if( compare >= inicio && compare <= fim )
                   conta++;
          }
-      return conta;
+      return conta; 
+   }
+   return 0;
    }
 
    private void createPercent(){
+      if( !this.isEmpty() ){ 
       this.percentIntervalos = new ArrayList<>();
       
       for( int i = 0; i < this.intervalos.size(); i++ ){
          Double valor = Double.valueOf( this.qtdeIntervalos.get( i ) ) / this.amostraOriginal.size() * 100;
          this.percentIntervalos.add( valor );
       }
+      }
    }
    
    private void createProporcao(){
+      if( !this.isEmpty() ){ 
       this.proporcaoIntervalos = new ArrayList<>();
       
       for( int i = 0; i < this.intervalos.size(); i++ ){
          Double valor = Double.valueOf( this.qtdeIntervalos.get( i ) ) / this.amostraOriginal.size() ;
          this.proporcaoIntervalos.add( valor );
       }
+      }
    }
    
-   public static void main( String[] args ) {
-    ArrayList<Double> va = new ArrayList<>();
-      va.add(9.4); va.add(5.4); va.add(5.1); va.add(5.3); va.add(5.2);
-      va.add(.9);  va.add(5.4); va.add(5.4); va.add( 800.); va.add( 80.);
-      va.add( 2.); va.add( 500.4);
-
-      DadosQuantitativos dq = new DadosQuantitativos(va);
-         //System.out.println(dq.getMaior(va, 0));
-         //System.out.println(dq.getMenor(va, 0));
-
-         dq.getByInterval ( va, 2 );
-         //System.out.println( dq.contador( .9, 9.4, 0) ); //TESTE DO CONTADOR
-         
-      }
-         
-   
 }
-
-
-
-   
-
