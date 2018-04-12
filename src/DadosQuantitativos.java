@@ -60,37 +60,19 @@ public void getByInterval(ArrayList<Double> amostra, int interval){
          
          
       }
-         
-         
-         
-   
-   
-   
-   
-   
    
 }
 
 
-
-
-
    public static void main( String[] args ) {
     ArrayList<Double> va = new ArrayList<>();
-    
-      va.add(9.4);
-      va.add(5.4);
-      va.add(5.1);
-      va.add(5.3);
-      va.add(5.2);
-      va.add(.9);
-      va.add(5.4);
-      va.add(5.4);
-      
-    /*  DadosQuantitativos dq = new DadosQuantitativos();
+      va.add(9.4);      va.add(5.4);      va.add(5.1);      va.add(5.3);      va.add(5.2);
+      va.add(.9);      va.add(5.4);      va.add(5.4);
+
+      DadosQuantitativos dq = new DadosQuantitativos(va);
          System.out.println(dq.getMaior(va, 0));
          System.out.println(dq.getMenor(va, 0));
-      */
+      
    }
 
 
